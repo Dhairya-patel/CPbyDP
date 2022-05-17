@@ -24,30 +24,31 @@ ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
 void solve()
 {
-    int n, ans = 0;
-    cin>>n;
+    int n, ptr, ans = 0;
+    cin>>n>>ptr;
+    ptr--;
     vector<int>v(n);
     for(int i=0;i<n;i++)
         cin>>v[i];
-    for(int i=0;i<n;i++)
+    if(v[ptr])
+        ans++;
+    for(int i = ptr - 1, j = ptr + 1;i >= 0 || j < n; i--, j++)
     {
-        int cnt = 1, curr = v[i];
-        for(int j=i-1;j>=0;j--)
+        if(i >= 0 && j < n)
         {
-            if(v[j] <= curr)
-                cnt++, curr = v[j];
-            else
-                break;
+            if(v[i] == 1 && v[j] == 1)
+                ans += 2;
         }
-        curr = v[i];
-        for(int j=i+1;j<n;j++)
+        else if(i >= 0)
         {
-            if(v[j] <= curr)
-                cnt++, curr = v[j];
-            else
-                break;
+            if(v[i])
+                ans++;
         }
-        ans = max(ans, cnt);
+        else
+        {
+            if(v[j])
+                ans++;
+        }
     }
     cout<<ans;
 }

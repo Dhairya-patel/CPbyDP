@@ -22,32 +22,26 @@
 using namespace std;
 ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
+bool cmp(pii &a, pii &b)
+{
+    return a.ss > b.ss;
+}
+
 void solve()
 {
-    int n, ans = 0;
-    cin>>n;
-    vector<int>v(n);
-    for(int i=0;i<n;i++)
-        cin>>v[i];
-    for(int i=0;i<n;i++)
+    int n, m;
+    cin>>n>>m;
+    ll ans = 0;
+    vector<pii> v(m);
+    for(int i=0;i<m;i++)
+        cin>>v[i].ff>>v[i].ss;
+    sort(all(v), cmp);
+    for(int i=0;i<m;i++)
     {
-        int cnt = 1, curr = v[i];
-        for(int j=i-1;j>=0;j--)
-        {
-            if(v[j] <= curr)
-                cnt++, curr = v[j];
-            else
-                break;
-        }
-        curr = v[i];
-        for(int j=i+1;j<n;j++)
-        {
-            if(v[j] <= curr)
-                cnt++, curr = v[j];
-            else
-                break;
-        }
-        ans = max(ans, cnt);
+        if(n >= v[i].ff)
+            n -= v[i].ff, ans += v[i].ff * v[i].ss;
+        else
+            ans += n * v[i].ss, n = 0;
     }
     cout<<ans;
 }

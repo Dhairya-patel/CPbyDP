@@ -24,32 +24,22 @@ ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
 void solve()
 {
-    int n, ans = 0;
+    ll n, mn = 0;
     cin>>n;
-    vector<int>v(n);
+    vector<ll>v(n);
     for(int i=0;i<n;i++)
         cin>>v[i];
+    ll need = 0;
     for(int i=0;i<n;i++)
     {
-        int cnt = 1, curr = v[i];
-        for(int j=i-1;j>=0;j--)
-        {
-            if(v[j] <= curr)
-                cnt++, curr = v[j];
-            else
-                break;
-        }
-        curr = v[i];
-        for(int j=i+1;j<n;j++)
-        {
-            if(v[j] <= curr)
-                cnt++, curr = v[j];
-            else
-                break;
-        }
-        ans = max(ans, cnt);
+        if(i == 0)
+            need = 0LL - v[i];
+        else
+            need += (v[i - 1] - v[i]);
+        if(need < 0LL)
+            mn = min(mn, need);
     }
-    cout<<ans;
+    cout<<-1LL * mn;
 }
 
 int main()
