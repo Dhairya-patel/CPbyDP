@@ -24,7 +24,9 @@ ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
 void solve()
 {
-    
+    int n;
+    cin>>n;
+    cout<<(n + 1) / 2<<endl;
 }
 
 int main()
@@ -43,7 +45,6 @@ int main()
 
 /*
 
--> if A task description is long, MUST READ it properly
 -> read the explanations below (MUST FOR GREEDY PROBS)
 -> stuck with implementation ? => DO ROUGH WORK
 

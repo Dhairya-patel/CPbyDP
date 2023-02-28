@@ -24,7 +24,38 @@ ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
 void solve()
 {
+    int n;
+    cin >> n;
     
+    map<int, int> cnt;
+    
+    vector<vector<int>> c(n);
+    for (int i = 0; i < n; i++) {
+        int k;
+        cin >> k;
+        
+        c[i].resize(k);
+        for (auto &x : c[i]) {
+            cin >> x;
+            cnt[x]++;
+        }
+    }
+    
+    for (int i = 0; i < n; i++) {
+        int ok = 1;
+        for (auto x : c[i]) {
+            if (cnt[x] == 1) {
+                ok = 0;
+                break;
+            }
+        }
+        if (ok) {
+            cout << "Yes\n";
+            return;
+        }
+    }
+    
+    cout << "No\n";
 }
 
 int main()
@@ -43,7 +74,6 @@ int main()
 
 /*
 
--> if A task description is long, MUST READ it properly
 -> read the explanations below (MUST FOR GREEDY PROBS)
 -> stuck with implementation ? => DO ROUGH WORK
 

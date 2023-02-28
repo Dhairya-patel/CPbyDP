@@ -24,7 +24,53 @@ ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
 void solve()
 {
-    
+    int n, k;
+    cin>>k>>n;
+    // k => len of v ; n => max num in v
+    vector<ll>v(k);
+    ll curr = 1, cnt = 0, ind = -1;
+    for(int i=0;i<k;i++)
+    {
+        if(i)
+            v[i] = v[i - 1] + curr, curr++;
+        else
+            v[i] = curr;
+    }
+    for(int i=k - 1;i>=0;i--)
+    {
+        if(v[i] <= n)
+            break;
+        cnt++;
+        ind = i;
+    }
+    if(ind == -1LL)
+    {
+        for(int i=0;i<k;i++)
+            cout<<v[i]<<" ";
+        cout<<endl;
+        return;
+    }
+    vector<ll>ans;
+    curr = n;
+    for(int i=ind - 1;i>=0;i--)
+    {
+        if(i)
+        {
+            if(cnt > 0)
+            {
+                while(curr != v[i] && i - 1 >= 0 && curr > v[i - 1] && cnt > 0)
+                {
+                    ans.pb(curr);
+                    curr--, cnt--;
+                }
+            }
+        }
+        ans.pb(v[i]);
+        curr = v[i] - 1;
+    }
+    for(int i=k-1;i>=0;i--)
+        cout<<ans[i]<<" ";
+    cout<<endl;
 }
 
 int main()
@@ -43,7 +89,6 @@ int main()
 
 /*
 
--> if A task description is long, MUST READ it properly
 -> read the explanations below (MUST FOR GREEDY PROBS)
 -> stuck with implementation ? => DO ROUGH WORK
 

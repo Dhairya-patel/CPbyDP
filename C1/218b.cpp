@@ -24,7 +24,44 @@ ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
 void solve()
 {
-    
+    int a, b, ans = 0;
+    cin>>a>>b;
+    int g = __gcd(a, b);
+    a /= g;
+    b /= g;
+    while(a != b)
+    {
+        if(a > b)
+        {
+            if(a % 5 == 0)
+                a /= 5;
+            else if(a % 3 == 0)
+                a /= 3;
+            else if(a % 2 == 0)
+                a /= 2;
+            else
+            {
+                cout<<"-1";
+                return;
+            }
+        }
+        else
+        {
+            if(b % 5 == 0)
+                b /= 5;
+            else if(b % 3 == 0)
+                b /= 3;
+            else if(b % 2 == 0)
+                b /= 2;
+            else
+            {
+                cout<<"-1";
+                return;
+            }
+        }
+        ans++;
+    }
+    cout<<ans;
 }
 
 int main()
@@ -33,7 +70,7 @@ int main()
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
     ll t = 1;
-    cin>>t;
+    // cin>>t;
     while(t--)
     {
         solve();

@@ -22,9 +22,40 @@
 using namespace std;
 ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
+map<int, vector<int>>adj;
+vector<int>ans;
+
+void dfs(int cv, int par)
+{
+    ans.pb(cv);
+    for(int i=0;i<adj[cv].sz();i++)
+        if(adj[cv][i] != par)
+            dfs(adj[cv][i], cv);
+}
+
 void solve()
 {
-    
+    int n;
+    cin>>n;
+    map<int, int>ind;
+    for(int i=0;i<n;i++)
+    {
+        int x, y;
+        cin>>x>>y;
+        ind[x]++, ind[y]++;
+        adj[x].pb(y);
+        adj[y].pb(x);
+    }
+    for(auto x : ind)
+    {
+        if(x.ss == 1)
+        {
+            dfs(x.ff, -1);
+            break;
+        }
+    }
+    for(int i=0;i<ans.sz();i++)
+        cout<<ans[i]<<" ";
 }
 
 int main()
@@ -33,7 +64,7 @@ int main()
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
     ll t = 1;
-    cin>>t;
+    // cin>>t;
     while(t--)
     {
         solve();

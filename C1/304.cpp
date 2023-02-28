@@ -22,9 +22,58 @@
 using namespace std;
 ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
+ll factorial(ll x)
+{
+    ll f = 1;
+    while(x > 1)
+    {
+        f *= x;
+        x--;
+    }
+    return f;
+}
+
 void solve()
 {
-    
+    int n, a, b;
+    ll cnt = 0;
+    cin>>n;
+    queue<int>q1, q2, u1, u2;
+    cin>>a;
+    for(int i=0;i<a;i++)
+    {
+        int x;
+        cin>>x;
+        q1.push(x);
+        u1.push(x);
+    }
+    cin>>b;
+    for(int i=0;i<b;i++)
+    {
+        int x;
+        cin>>x;
+        q2.push(x);
+        u2.push(x);
+    }
+    int s1 = q1.size(), s2 = q2.size();
+    ll mx = factorial(s1 + s2);
+    while(!q1.empty() && !q2.empty())
+    {
+        int x = q1.front(), y = q2.front();
+        q1.pop(), q2.pop();
+        if(x > y)
+            q1.push(y), q1.push(x);
+        else
+            q2.push(x), q2.push(y);
+        cnt++;
+        if(cnt > mx)
+        {
+            cout<<"-1";
+            return;
+        }
+    }
+    cout<<cnt<<" "<<(q1.empty() ? "2" : "1");
+    return;
 }
 
 int main()
@@ -33,7 +82,7 @@ int main()
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
     ll t = 1;
-    cin>>t;
+    // cin>>t;
     while(t--)
     {
         solve();

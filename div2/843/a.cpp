@@ -24,7 +24,19 @@ ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
 void solve()
 {
-    
+    string str;
+    cin>>str;
+    int n = str.size(), pos;
+    for(int i=1;i<n-1;i++)
+    {
+        if(str[i] == 'a')
+        {
+            cout<<str.substr(0, i)<<" a "<<str.substr(i + 1)<<endl;
+            return;
+        }
+    }
+    cout<<str[0]<<" "<<str.substr(1, n-2)<<" "<<str[n-1]<<endl;
+    return;
 }
 
 int main()

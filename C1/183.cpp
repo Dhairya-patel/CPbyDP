@@ -24,7 +24,21 @@ ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
 void solve()
 {
-    
+    int n;
+    cin>>n;
+    if(!(n&1))
+    {
+        cout<<"-1";
+        return;
+    }
+    for(int i=0;i<n;i++)
+        cout<<i<<" ";
+    cout<<endl<<n - 1<<" ";
+    for(int i=0;i<n-1;i++)
+        cout<<i<<" ";
+    cout<<endl<<n - 1<<" ";
+    for(int i=0;i<n-1;i++)
+        cout<<(i + i + 1) % n<<" ";
 }
 
 int main()
@@ -33,7 +47,7 @@ int main()
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
     ll t = 1;
-    cin>>t;
+    // cin>>t;
     while(t--)
     {
         solve();

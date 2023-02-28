@@ -43,7 +43,6 @@ int main()
 
 /*
 
--> if A task description is long, MUST READ it properly
 -> read the explanations below (MUST FOR GREEDY PROBS)
 -> stuck with implementation ? => DO ROUGH WORK
 

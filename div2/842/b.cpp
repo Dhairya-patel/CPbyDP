@@ -24,7 +24,20 @@ ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
 void solve()
 {
-    
+    int n, k, cnt = 0;
+    cin>>n>>k;
+    vector<int>v(n);
+    for(int i=0;i<n;i++)
+        cin>>v[i];
+    int curr = 1, op = 0;
+    for(int i=0;i<n;i++)
+    {
+        if(v[i] == curr)
+            curr++;
+        else
+            op++;
+    }
+    cout<<(op + k - 1) / k<<endl;
 }
 
 int main()
@@ -43,7 +56,6 @@ int main()
 
 /*
 
--> if A task description is long, MUST READ it properly
 -> read the explanations below (MUST FOR GREEDY PROBS)
 -> stuck with implementation ? => DO ROUGH WORK
 
