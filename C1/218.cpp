@@ -22,39 +22,40 @@
 using namespace std;
 ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
-bool good(ll mx, ll n, ll k, vector<ll> &v)
+bool good(ll x, string &str, ll nb, ll ns, ll nc, ll pb, ll ps, ll pc, ll ru)
 {
-    ll sum = 0, segs = 0;
-    for(int i=0;i<n;i++)
+    ll b = 0, s = 0, c = 0, needb = 0, needs = 0, needc = 0;
+    for(int i=0;i<str.sz();i++)
     {
-        if(v[i] > mx)
-            return false;
-        if(sum + v[i] <= mx)
-            sum += v[i];
+        if(str[i] == 'B')
+            b++;
+        else if(str[i] == 'S')
+            s++;
         else
-            sum = v[i], segs++;
+            c++;
     }
-    segs++;
-    return segs <= k;
+    needb = ((x * b) - nb) * pb;
+    needs = ((x * s) - ns) * ps;
+    needc = ((x * c) - nc) * pc;
+    needb = max(needb, 0LL), needs = max(needs, 0LL), needc = max(needc, 0LL);
+    return needb + needs + needc <= ru;
 }
 
 void solve()
 {
-    ll n, k, total = 0;
-    cin>>n>>k;
-    vector<ll>v(n);
-    for(int i=0;i<n;i++)
-        cin>>v[i], total += v[i];
-    ll l = 0, r = total + 1, mid;
+    string str;
+    ll nb, ns, nc, pb, ps, pc, ru;
+    cin>>str>>nb>>ns>>nc>>pb>>ps>>pc>>ru;
+    ll l = -1, r = 1e13, mid;
     while(l + 1 < r)
     {
-        mid = (l + r) / 2;
-        if(good(mid, n, k, v))
-            r = mid;
-        else
+        mid = (l + r) / 2LL;
+        if(good(mid, str, nb, ns, nc, pb, ps, pc, ru))
             l = mid;
+        else
+            r = mid;
     }
-    cout<<r;
+    cout<<l;
 }
 
 int main()
@@ -73,6 +74,7 @@ int main()
 
 /*
 
+-> if A task description is long, MUST READ it properly
 -> read the explanations below (MUST FOR GREEDY PROBS)
 -> stuck with implementation ? => DO ROUGH WORK
 

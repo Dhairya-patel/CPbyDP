@@ -22,54 +22,45 @@
 using namespace std;
 ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
+struct query
+{
+    ll l, r, d;
+};
+
 void solve()
 {
-    int n, mn = 0, mx = INT_MAX;
-    cin>>n;
-    vector<int>v(n);
-    for(int i=0;i<n;i++)
+    int n, m, k;
+    cin>>n>>m>>k;
+    vector<ll>v(n + 1), a(m + 2, 0), net(n + 2, 0);
+    vector<query>q(m + 1);
+    for(int i=1;i<=n;i++)
         cin>>v[i];
-    bool f = true;
-    for(int i=0;i<n-1;i++)
+    for(int i=1;i<=m;i++)
+        cin>>q[i].l>>q[i].r>>q[i].d;  
+    for(int i=0;i<k;i++)
     {
-        if(v[i] > v[i + 1])
-        {
-            f = false;
-            break;
-        }
+        int l, r;
+        cin>>l>>r;
+        //  a[i] is the count of times query i is run
+        a[l]++;
+        a[r + 1]--;
     }
-    if(f)
+
+    for(int i=1;i<=m;i++)
+        a[i] += a[i - 1];
+    for(int i=1;i<=m;i++)
     {
-        cout<<0<<endl;
-        return;
+        //  net[i] is the amount to add at the place i
+        ll left = q[i].l, right = q[i].r, diff = q[i].d * a[i];
+        net[left] += diff;
+        net[right + 1] -= diff;
     }
-    f = true;
-    for(int i=1;i<n;i++)
+    for(int i=1;i<=n;i++)
+        net[i] += net[i - 1];
+    for(int i=1;i<=n;i++)
     {
-        if(v[i - 1] < v[i])
-        {
-            f = false;
-            break;
-        }
+        cout<<v[i] + net[i]<<" ";
     }
-    if(f)
-    {
-        cout<<v[0]<<endl;
-        return;
-    }
-    for(int i=0;i<n-1;i++)
-    {
-        int x = (v[i] + v[i + 1]) / 2;
-        int y = (v[i] + v[i + 1] + 1) / 2;
-        if(v[i] < v[i + 1])
-            mx = min(mx, x);
-        if(v[i] > v[i + 1])
-            mn = max(mn, y);
-    }
-    if(mn <= mx)
-        cout<<mn<<endl;
-    else
-        cout<<"-1"<<endl;
 }
 
 int main()
@@ -78,7 +69,7 @@ int main()
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
     ll t = 1;
-    cin>>t;
+    // cin>>t;
     while(t--)
     {
         solve();
@@ -88,6 +79,7 @@ int main()
 
 /*
 
+-> if A task description is long, MUST READ it properly
 -> read the explanations below (MUST FOR GREEDY PROBS)
 -> stuck with implementation ? => DO ROUGH WORK
 

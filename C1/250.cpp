@@ -22,28 +22,47 @@
 using namespace std;
 ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
+int get(int x)
+{
+    for(int i=0;i<32;i++)
+        if(x&(1<<i))
+            return pow(2, i);
+    return 0;
+}
+
 void solve()
 {
-    int n, k;
-    cin>>n>>k;
-    vector<int>v(n);
-    for(int i=0;i<n;i++)
-        cin>>v[i];
-    for(int i=0;i<k;i++)
+    int sum, limit, mx_sum = 0;
+    vector<pii>v;
+    vector<int>ans;
+    cin>>sum>>limit;
+    for(int i=1;i<=limit;i++)
     {
-        int x;
-        cin>>x;
-        int l = -1, r = n, mid;
-        while(l + 1 < r)
-        {
-            mid = (l + r) / 2;
-            if(v[mid] < x)
-                l = mid;
-            else
-                r = mid;
-        }
-        cout<<r + 1<<endl;
+        int x = get(i);
+        mx_sum += x;
+        v.pb({x, i});
     }
+    if(mx_sum < sum)
+    {
+        cout<<"-1";
+        return;
+    }
+    for(int i=v.sz()-1;i>=0;i--)
+    {
+        if(v[i].ff <= sum)
+        {
+            sum -= v[i].ff;
+            ans.pb(v[i].ss);
+        }
+    }
+    if(sum == 0)
+    {
+        cout<<ans.sz()<<endl;
+        for(int i=0;i<ans.sz();i++)
+            cout<<ans[i]<<" ";
+        return;
+    }
+    cout<<"-1";
 }
 
 int main()
@@ -62,6 +81,7 @@ int main()
 
 /*
 
+-> if A task description is long, MUST READ it properly
 -> read the explanations below (MUST FOR GREEDY PROBS)
 -> stuck with implementation ? => DO ROUGH WORK
 

@@ -9,7 +9,7 @@
 #define endl '\n'
 #define all(v) v.begin(), v.end()
 #define allr(v) v.rbegin(), v.rend()
-#define maxn 100000+5
+#define maxn 30+5
 #define eps 1e-10
 #define ff first
 #define ss second 
@@ -22,55 +22,31 @@
 using namespace std;
 ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
+ll ncr[maxn][maxn] = {0};
+
+void init()
+{
+    for(int i=0;i<maxn;i++)
+        ncr[0][i] = 0, ncr[i][0] = 1, ncr[i][1] = i;
+    for(int i=1;i<maxn;i++)
+        for(int j=1;j<maxn;j++)
+            ncr[i][j] = ncr[i - 1][j] + ncr[i - 1][j - 1];
+}
+
 void solve()
 {
-    int n, k;
-    cin>>k>>n;
-    // k => len of v ; n => max num in v
-    vector<ll>v(k);
-    ll curr = 1, cnt = 0, ind = -1;
-    for(int i=0;i<k;i++)
+    ll n, m, t, ans = 0;
+    cin>>n>>m>>t;
+    init();
+    for(ll i=4;i<=n && i<t;i++)
     {
-        if(i)
-            v[i] = v[i - 1] + curr, curr++;
-        else
-            v[i] = curr;
-    }
-    for(int i=k - 1;i>=0;i--)
-    {
-        if(v[i] <= n)
-            break;
-        cnt++;
-        ind = i;
-    }
-    if(ind == -1LL)
-    {
-        for(int i=0;i<k;i++)
-            cout<<v[i]<<" ";
-        cout<<endl;
-        return;
-    }
-    vector<ll>ans;
-    curr = n;
-    for(int i=ind - 1;i>=0;i--)
-    {
-        if(i)
+        if(t - i >= 1 && t - i <= m)
         {
-            if(cnt > 0)
-            {
-                while(curr != v[i] && i - 1 >= 0 && curr > v[i - 1] && cnt > 0)
-                {
-                    ans.pb(curr);
-                    curr--, cnt--;
-                }
-            }
+            ll ch1 = ncr[n][i], ch2 = ncr[m][t - i];
+            ans += (ch1 * ch2);
         }
-        ans.pb(v[i]);
-        curr = v[i] - 1;
     }
-    for(int i=k-1;i>=0;i--)
-        cout<<ans[i]<<" ";
-    cout<<endl;
+    cout<<ans;
 }
 
 int main()
@@ -79,7 +55,7 @@ int main()
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
     ll t = 1;
-    cin>>t;
+    // cin>>t;
     while(t--)
     {
         solve();
@@ -89,6 +65,7 @@ int main()
 
 /*
 
+-> if A task description is long, MUST READ it properly
 -> read the explanations below (MUST FOR GREEDY PROBS)
 -> stuck with implementation ? => DO ROUGH WORK
 

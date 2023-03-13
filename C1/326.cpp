@@ -22,34 +22,56 @@
 using namespace std;
 ll dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
+bool ok(ll x)
+{
+    int c = 0;
+    while(x % 2LL == 0LL)
+    {
+        c++;
+        x /= 2LL;
+        if(c > 1)
+            return false;
+    }
+    for(ll i=3;i*i<=x;i+=2LL)
+    {
+        if(x % i == 0LL)
+        {
+            c = 0;
+            while(x % i == 0LL)
+            {
+                c++;
+                x /= i;
+                if(c > 1)
+                    return false;
+            }
+        }
+    }
+    return true;
+}
+
 void solve()
 {
-    int n, k;
-    cin>>n>>k;
-    vector<int>v(n);
-    for(int i=0;i<n;i++)
-        cin>>v[i];
-    for(int i=0;i<k;i++)
+    ll x, ans;
+    cin>>x;
+    vector<ll>v;
+    for(ll i=1;i*i<=x;i++)
     {
-        int x;
-        cin>>x;
-        int l = -1, r = n, mid;
-        bool f = false;
-        while(l + 1 < r)
+        if(x % i == 0LL)
         {
-            mid = (l + r) / 2;
-            if(v[mid] == x)
-            {
-                f = true;
-                break;
-            }
-            else if(v[mid] < x)
-                l = mid;
+            if(i == x/i)
+                v.pb(i);
             else
-                r = mid;
+                v.pb(i), v.pb(x / i);
         }
-        cout<<(f ? "YES" : "NO")<<endl;
     }
+    sort(all(v));
+    for(int i=0;i<v.sz();i++)
+    {
+        // cout<<v[i]<<" "<<ok(v[i])<<endl;
+        if(ok(v[i]))
+            ans = v[i];
+    }
+    cout<<ans;
 }
 
 int main()
@@ -68,6 +90,7 @@ int main()
 
 /*
 
+-> if A task description is long, MUST READ it properly
 -> read the explanations below (MUST FOR GREEDY PROBS)
 -> stuck with implementation ? => DO ROUGH WORK
 
